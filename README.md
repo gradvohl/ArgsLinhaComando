@@ -118,6 +118,18 @@ operacao = argv[2][0];
 ```
 Por fim, a variável ``operando2`` obtém o terceiro argumento após o nome do programa (que está na variável ``argv[3]``), já convertido de _string_ para número inteiro,  usando a função ``atoi``, na mesma forma que a variável ``operando1`` obteve.
 
+
+Para ver o exemplo funcionando, compile o programa ``segundo.c`` com a linha de comando a seguir.
+```bash
+gcc segundo.c -o segundo.o
+```
+Depois de compilado, execute o programa passando os argumentos pela linha de comando. Eis um exemplo:
+```bash
+./segundo.o 1 + 2 
+```
+
+Faça outros testes e verifique como o programa se comporta.
+
 ### Em resumo
 Para resumir, fique atento aos tipos de dados que você utilizar para representar os argumentos da linha de comando. Se você for utilizar um determinado argumento como _string_, você poderá utilizar a posição específica da variável ``argv`` sem problemas. Embora minha recomendação seja copiar a posição específica da variável ``argv`` para outra _string_, para não causar confusão.
 
