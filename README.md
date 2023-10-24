@@ -65,8 +65,11 @@ Como comentamos antes, note que o primeiro argumento (que está em ``argv[0]``) 
 
 ### Conversão de argumentos de strings para valores numéricos
 No exemplo anterior, nossa preocupação era apenas mostrar os argumentos passados pela linha de comando. Agora, faremos um programa um pouco mais complexo para ilustrar a conversão de parâmetros. 
+
 O programa a seguir receberá três parâmetros da linha de comando na seguinte sequência: um número inteiro; um operador entre ``+``, ``-``, ``*`` ou ``/``; e outro número inteiro. No final, o programa mostrará a operação matemática do primeiro número com o segundo.
+
 Vejamos o programa:
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -111,11 +114,15 @@ int main(int argc, char *argv[])
 }
 ```
 Observe que, no primeiro teste feito no comando ``if``, verificamos se o usuário informou a quantidade correta de argumentos (4 nesse exemplo). Se a quantidade de argumentos, informada na variável ``argc`` for diferente de 4, então o programa emite uma mensagem de erro e termina retornando o código 1.
-Se o programa não terminou, então a variável ``operando1`` receberá o primeiro argumento após o nome do programa (que está na variável ``argv[1]``), já convertido de _string_ para número inteiro,  usando a função ``atoi``.  Os detalhes sobre a função ``atoi`` podem ser vistos utilizando o comando ``man atoi``.
+
+Se o programa não terminou, então a variável ``operando1`` receberá o primeiro argumento após o nome do programa (que está na variável ``argv[1]``), já convertido de _string_ para número inteiro,  usando a função ``atoi``.  Os detalhes sobre a função ``atoi`` podem ser vistos utilizando o comando ``man atoi``. Note que, para utilizar a função ``atoi``, seu programa deverá adicionar a linha ``#include <stdlib.h>``.
+
 Em seguida, a variável ``operacao`` receberá o segundo argumento após o nome do programa (que está na variável ``argv[2]``). Note que a variável ``operacao`` é do tipo ``char``, isto é, armazena um único caractere; enquanto a variável ``argv[2]`` é uma _string_ que deve conter dois caracteres (o operador, que pode ser ``+``, ``-``, ``*`` ou ``/`` e o terminador de _strings_, o ``\0``). No nosso caso, estamos interessados apenas no primeiro caractere (o operador). Por isso, obtemos a primeira posição (posição zero) do vetor ``argv`` na posição 2. Ou seja, o comando é o seguinte:
+
 ```c
 operacao = argv[2][0];
 ```
+
 Por fim, a variável ``operando2`` obtém o terceiro argumento após o nome do programa (que está na variável ``argv[3]``), já convertido de _string_ para número inteiro,  usando a função ``atoi``, na mesma forma que a variável ``operando1`` obteve.
 
 
