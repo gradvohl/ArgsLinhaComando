@@ -20,7 +20,7 @@ A estrutura deste tutorial é a seguinte:
    2.1. [Exemplo simples](#exemplo-simples)  
    2.2. [Exemplo mais elaborado](#exemplo-mais-elaborado)  
  3. [Considerações finais](#consideracoes-finais)  
-  [Licença](#licenca)  
+  [Licença](#licença)  
 
 
 ## Passagem de argumentos pela linha de comando
