@@ -308,3 +308,17 @@ Este tutorial apresentou apenas as estratégias mais simples para o tratamento d
 Portanto, para se aprofundar sobre o tema, eu sugiro o tutorial [Mead's Guide to getopt](https://azrael.digipen.edu/~mmead/www/mg/getopt/index.html). Esse tutorial vai mais fundo no tratamento dos argumentos, inclusive com as chamadas "opções longas", isto é, aquelas com nomes inteiros (por exemplo ``--verbose``), ao invés de somente letras.
 
 Por fim, se você gostou deste tutorial, ou se tem sugestões de como aprimorá-lo, entre em contato comigo no e-mail [gradvohl@unicamp.br](mailto:gradvohl@unicamp.br). Considere também marcar o repositório com uma estrela :star:.
+
+
+## Licença
+Este tutorial está licenciado com a licença Creative Commons Attribution 4.0 International License.
+
+[![CC BY-SA 4.0][cc-by-sa-image]][cc-by-sa]
+
+[cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
+[cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
+[cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
+
+Leitores e instrutores estão livres para compartilhar e adaptar esse material às suas necessidades. Sugere-se que sempre faça uma citação ao autor do texto original.
+
+![GitHub repo size](https://img.shields.io/github/repo-size/gradvohl/ArgsLinhaComando?style=plastic) ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/gradvohl/ArgsLinhaComando/latest?style=plastic) ![GitHub Release Date](https://img.shields.io/github/release-date/gradvohl/ArgsLinhaComando)
