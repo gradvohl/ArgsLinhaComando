@@ -14,11 +14,11 @@ A [segunda parte](#passagem-de-argumentos-com-a-função-getopt) é mais avança
 A estrutura deste tutorial é a seguinte:
 
  1. [Passagem de argumentos pela linha de comando](#passagem-de-argumentos-pela-linha-de-comando)
-    1.1. [Conversão de argumentos de strings para valores numéricos](conversao-de-argumentos-de-strings-para-valores-numericos)
-    1.2. [Em resumo](#em-resumo) 
+   1.1. [Conversão de argumentos de strings para valores numéricos](conversao-de-argumentos-de-strings-para-valores-numericos)
+   1.2. [Em resumo](#em-resumo) 
  2. [Passagem de argumentos com a função ``getopt``](#passagem-de-argumentos-com-a-função-getopt)
-    2.1. [Exemplo simples](#exemplo-simples)
-    2.2. [Exemplo mais elaborado](#exemplo-mais-elaborado)
+   2.1. [Exemplo simples](#exemplo-simples)
+   2.2. [Exemplo mais elaborado](#exemplo-mais-elaborado)
  3. [Considerações finais](#consideracoes-finais)
   [Licença](#licenca)
 
