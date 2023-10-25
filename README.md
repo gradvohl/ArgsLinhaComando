@@ -1,6 +1,6 @@
 
 # Passagem de argumentos pela linha de comando para programas na linguagem C
-Este é um breve tutorial para a passagem de argumentos pela linha de comando para programas na linguagem C. A vantagem dessa passagem de argumentos é informar, já no início do programa, quais são os dados básicos necessários para seu funcionamento. Se o programa tiver todos os dados que precisa já no seu início, não será preciso ficar solicitando ao usuário por mais dados.
+Este é um breve tutorial para a passagem de argumentos pela linha de comando para programas na linguagem C. A vantagem dessa passagem de argumentos é informar, já no início do programa, quais são os dados básicos necessários para seu funcionamento. Se o programa tiver todos os dados que precisa já no seu início, não será preciso ficar solicitando mais dados ao usuário ao longo da execução do programa.
 
 Destacamos que os programas exemplo que estão neste repositório foram escritos para a linguagem C para o sistema operacional Linux. Os conceitos são os mesmos para outros sistemas operacionais. Mas, as bibliotecas utilizadas podem ser um pouco diferentes.
 
@@ -59,7 +59,16 @@ argv[2]: 2
 argv[3]: abc
 argv[4]: 3.45
 ```
-Como comentamos antes, note que o primeiro argumento (que está em ``argv[0]``) é o próprio nome do programa. Em seguida, estão os demais argumentos.
+Como comentamos antes, note que o primeiro argumento (que está em ``argv[0]``) é o próprio nome do programa. Em seguida, estão os demais argumentos. Esquematicamente, na memória temos o seguinte:
+
+```mermaid
+  graph LR;
+      argv-->|0|id1[''./primeiro'']
+      argv-->|1|id2[''1''];
+      argv-->|2|id3[''2''];
+      argv-->|3|id4[''abc''];
+      argv-->|4|id5[''3.45''];
+```
 
 **É importante destacar que cada um dos argumentos é uma _string_. Afinal, estão armazenados em ``argv``, um vetor de _strings_.** Portanto, se você quiser utilizar os argumentos como valores inteiros ou reais, é preciso convertê-los antes. Vejamos como fazer a seguir.
 
@@ -143,3 +152,74 @@ Para resumir, fique atento aos tipos de dados que você utilizar para representa
 Se você deseja interpretar um determinado argumento como um número **inteiro**, utilize a função ``atoi`` para converter a posição específica da variável ``argv`` para inteiro.
 
 Se você deseja interpretar um determinado argumento como um número **real**, utilize a função ``atof`` para converter a posição específica da variável ``argv`` para real.
+
+## Passagem de argumentos com a função ``getopt``
+Se você já é usuário de interpretadores de linha de comando (_shells_) em Linux -- como o ``bash``, ``csh`` ou ``zsh`` --, deve ter notado que alguns comandos ou programas aceitam uma variedade de argumentos pela linha de comando. Além disso, esses argumentos podem ser passados em qualquer ordem.
+
+Por exemplo, veja a execução do comando ``ls``, que mostra a lista de arquivos.  Você poderá executar esse comando pedindo para listar todos os arquivos (**opção** ``-a``), no formato longo (**opção** ``-l``) e de modo que os humanos possam entender melhor o tamanho dos arquivos, isto é, em _kilo bytes_, _mega bytes_ ou _gigabytes_ (**opção** ``-h``). Assim, você poderá executar o comando ``ls`` da forma a seguir:
+```bash
+ls -l -a -h
+```
+Ou de outra forma:
+```bash
+ls -h -l -a
+```
+O resultado será o mesmo.
+
+Para interpretar os argumentos corretamente, podemos utilizar a função ``getopt``, que está disponível no cabeçalho ``getopt.h``. A assinatura da função é a seguinte:
+```c
+int getopt(int argc, char *const argv[], const char *optstring);
+```
+Onde:
+
+ - ``argc`` e ``argv`` são exatamente as mesmas variáveis que você utilizou na função ``main``; e
+ - ``optstring`` contém as letras que serão interpretadas como **opções** para o seu programa.
+ 
+Importante: a partir desse momento, diferenciemos o conceito de **opções** do conceito de **argumentos**. As **opções** serão sempre precedidas de um hífen (``-``). Por exemplo, no comando ``ls -h``, o ``-h`` é uma **opção**.
+
+No cabeçalho ``getopt.h``, além da definição da função ``getopt``, há também a declaração de duas variáveis globais importantes:
+```c
+extern char *optarg;
+extern int optind
+```
+A primeira, ``optarg``, conterá os argumentos que vêm após as opções. A segunda, ``optind``,  é um índice que controla o acesso a cada uma das posições do vetor ``argv``.
+
+### Exemplo simples
+Começaremos com um exemplo bem simples para ilustrar o uso da ``getopt``. Nesse exemplo, o programa trabalhará com três opções (``-a``,  ``-b``, ``-C``). Note que a opção ``-C`` usa letra maiúscula. Veja o programa a seguir.
+```c
+#include <stdio.h>
+#include <getopt.h> /* Cabecalho para o getopt.*/
+int main(int argc, char *argv[])
+{
+  int opcao;
+  /*Análise de cada uma das opcoes*/
+  while ((opcao = getopt(argc, argv, "abC")) != -1)
+  {
+     switch (opcao)
+     {
+      case 'a':
+        printf("A opcao a foi identificada\n");
+        break;
+      case 'b':
+        printf("A opcao b foi identificada\n");
+        break;
+      case 'C':
+        printf("A opcao C foi identificada\n");
+        break;
+     }
+  }
+  return 0;
+}
+```
+Note que para tratar cada uma das opções, é preciso utilizar o comando ``while``, que vai analisar cada uma delas, a cada iteração do laço. Assim, a cada iteração, uma das opções que foi reconhecida será atribuída à variável ``opcao``.
+
+Essa variável opção será analisada pelo comando ``switch`` (dentro do ``while``) que tratará cada uma das opções isoladamente.
+
+Perceba ainda que, o terceiro parâmetro da função ``getopt`` é a _string _ ``abC``. Isso informa que a expectativa é que esse programa aceite uma das três opções (``-a``,  ``-b``, ``-C``) ou uma combinação delas. Por exemplo, ``-ab``, ``-Cb``, ``-a -b -Cb``, ``-aC -b``.
+
+Quando a função ``getopt`` terminar de analisar todas a opções, ela retornará ``-1``. Isso faz com que o laço ``while`` termine.
+
+Compile e execute o programa anterior e faça testes para verificar as possibilidades e resultados. Execute com uma opção desconhecida (por exemplo ``-o``) e veja o que acontece.
+ 
+
+
