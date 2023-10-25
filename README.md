@@ -185,7 +185,8 @@ extern int optind
 A primeira, ``optarg``, conterá os argumentos que vêm após as opções. A segunda, ``optind``,  é um índice que controla o acesso a cada uma das posições do vetor ``argv``.
 
 ### Exemplo simples
-Começaremos com um exemplo bem simples para ilustrar o uso da ``getopt``. Nesse exemplo, o programa trabalhará com três opções (``-a``,  ``-b``, ``-C``). Note que a opção ``-C`` usa letra maiúscula. Veja o programa a seguir.
+Começaremos com um exemplo bem simples para ilustrar o uso da ``getopt``. Nesse exemplo, o programa trabalhará com três opções (``-a``,  ``-b``, ``-C``). Note que a opção ``-C`` usa letra maiúscula. Veja o programa ``exemploSimplesGetopt.c`` a seguir.
+
 ```c
 #include <stdio.h>
 #include <getopt.h> /* Cabecalho para o getopt.*/
@@ -211,6 +212,7 @@ int main(int argc, char *argv[])
   return 0;
 }
 ```
+
 Note que para tratar cada uma das opções, é preciso utilizar o comando ``while``, que vai analisar cada uma delas, a cada iteração do laço. Assim, a cada iteração, uma das opções que foi reconhecida será atribuída à variável ``opcao``.
 
 Essa variável opção será analisada pelo comando ``switch`` (dentro do ``while``) que tratará cada uma das opções isoladamente.
@@ -219,7 +221,6 @@ Perceba ainda que, o terceiro parâmetro da função ``getopt`` é a _string _ `
 
 Quando a função ``getopt`` terminar de analisar todas a opções, ela retornará ``-1``. Isso faz com que o laço ``while`` termine.
 
-Compile e execute o programa anterior e faça testes para verificar as possibilidades e resultados. Execute com uma opção desconhecida (por exemplo ``-o``) e veja o que acontece.
+Compile e execute o programa ``exemploSimplesGetopt.c`` que está no repositório e faça testes para verificar as possibilidades e resultados. Execute com uma opção desconhecida (por exemplo ``-o``) e veja o que acontece.
  
-
 
