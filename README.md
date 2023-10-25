@@ -6,7 +6,7 @@ Destacamos que os programas exemplo que estão neste repositório foram escritos
 
 Dividimos esse tutorial em duas partes. A [primeira parte](#passagem-de-argumentos-pela-linha-de-comando) é bem básica, para aqueles que estão iniciando ou que querem fazer um programa rápido, no qual o usuário já sabe de antemão a quantidade e o tipo dos argumentos que o programa espera receber.
 
-A segunda parte é mais avançada e utiliza uma biblioteca que permite uma especificação mais profissional dos argumentos que serão passados para o programa.
+A [segunda parte](#passagem-de-argumentos-com-a-função-getopt) é mais avançada e utiliza uma biblioteca que permite uma especificação mais profissional dos argumentos que serão passados para o programa.
 
 ## Passagem de argumentos pela linha de comando
 Para que seu programa receba argumentos da linha de comando, é preciso que a sua função ``main`` tenha a seguinte assinatura:
