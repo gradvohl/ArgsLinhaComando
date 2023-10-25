@@ -1,5 +1,8 @@
-
 # Passagem de argumentos pela linha de comando para programas na linguagem C
+![image](https://img.shields.io/badge/Programming-brightgreen?style=plastic&logo=c%2B%2B) ![image](https://img.shields.io/badge/GNU%20Bash-4EAA25?style=plastic&style=for-the-badge&logo=GNU%20Bash&logoColor=white) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gradvohl/yaptt?style=plastic) ![GitHub](https://img.shields.io/github/license/gradvohl/yaptt?style=plastic)
+
+By André Leon S. Gradvohl, Dr. ([gradvohl@unicamp.br](mailto:gradvohl@unicamp.br))
+
 Este é um breve tutorial para a passagem de argumentos pela linha de comando para programas na linguagem C. A vantagem dessa passagem de argumentos é informar, já no início do programa, quais são os dados básicos necessários para seu funcionamento. Se o programa tiver todos os dados que precisa já no seu início, não será preciso ficar solicitando mais dados ao usuário ao longo da execução do programa.
 
 Destacamos que os programas exemplo que estão neste repositório foram escritos para a linguagem C para o sistema operacional Linux. Os conceitos são os mesmos para outros sistemas operacionais. Mas, as bibliotecas utilizadas podem ser um pouco diferentes.
@@ -199,13 +202,13 @@ int main(int argc, char *argv[])
      switch (opcao)
      {
       case 'a':
-        printf("A opcao a foi identificada\n");
+        printf("A opcao a foi identificada.\n");
         break;
       case 'b':
-        printf("A opcao b foi identificada\n");
+        printf("A opcao b foi identificada.\n");
         break;
       case 'C':
-        printf("A opcao C foi identificada\n");
+        printf("A opcao C foi identificada.\n");
         break;
      }
   }
@@ -223,4 +226,85 @@ Quando a função ``getopt`` terminar de analisar todas a opções, ela retornar
 
 Compile e execute o programa ``exemploSimplesGetopt.c`` que está no repositório e faça testes para verificar as possibilidades e resultados. Execute com uma opção desconhecida (por exemplo ``-o``) e veja o que acontece.
  
+### Exemplo mais elaborado
+Mas o que precisamos fazer se quisermos que haja um argumento associado a uma determinada opção? Por exemplo, em um determinado programa poderíamos ter um argumento associado à opção ``-a`` e outro argumento associado a opção ``-b``.  Assim, teriamos o seguinte:
+```bash
+./exemploComplexGetop.o  -a arquivA.dat -b arquivB.dat
+```
+Dessa forma, associado à opção ``-a`` está o argumento ``arquivA.dat``, e  associado à opção ``-b`` está associado o argumento ``arquivB.dat``.
 
+Para usar essa estratégia, precisamos adicionar o caractere ``:`` na _string_ passada como parâmetro para a ``getopt``, logo após cada opção. No caso do exemplo proposto, utilizaremos a _string_ "``a:b:``". Note que após o caractere ``a`` tem o caractere ``:`` e também após o  caractere ``b``.
+
+Vamos ao exemplo completo.
+```c
+#include <stdio.h>
+#include <getopt.h> /* Cabecalho para o getopt.*/
+int main(int argc, char *argv[])
+{
+  int opcao;
+  /*Análise de cada uma das opcoes*/
+  while ((opcao = getopt(argc, argv, "a:b:")) != -1)
+  {
+     switch (opcao)
+     {
+      case 'a':
+        printf("A opcao a foi identificada.\n");
+        printf("Argumento da opcao a: %s\n", optarg);
+        break;
+      case 'b':
+        printf("A opcao b foi identificada.\n");
+        printf("Argumento da opcao b: %s\n", optarg);
+        break;
+     }
+  }
+  return 0;
+}
+```
+
+Note que, nesse último exemplo, o argumento para cada opção está na variável ``optarg`` que é uma _string_ (``char *``), conforme indicamos na [seção anterior](#passagem-de-argumentos-com-a-função-getopt).
+
+**Importante:** No exemplo, atente para o fato de que estamos usando a mesma variável ``optarg`` para tratar o argumento de cada opção.  Assim, a cada iteração do laço, o valor anterior dessa variável se perde (na verdade, o endereço para a _string_ armazenada em ``optarg``).  Por isso, é sempre importante copiar o conteúdo do endereço armazenado em optarg para outra _string_. Vejamos o exemplo a seguir, um pouco mais completo.
+```c
+#include <stdio.h>
+#include <getopt.h> /* Cabecalho para o getopt.*/
+
+int main(int argc, char *argv[])
+{
+  int opcao;
+  char *arqA;
+  char *arqB;
+
+  /*Análise de cada uma das opcoes*/
+  while ((opcao = getopt(argc, argv, "a:b:")) != -1)
+  {
+     switch (opcao)
+     {
+      case 'a':
+        printf("A opcao a foi identificada.\n");
+        arqA = optarg;
+        printf("Argumento da opcao a: %s\n", arqA);
+        break;
+      case 'b':
+        printf("A opcao b foi identificada.\n");
+        arqB = optarg;
+        printf("Argumento da opcao b: %s\n", arqB);
+        break;
+     }
+  }
+  printf("Informacao indicada para a opcao A: %s\n", arqA);
+  printf("Informacao indicada para a opcao B: %s\n", arqB);
+  return 0;
+}
+```
+
+Perceba que declaramos outras duas variáveis ``arqA`` e ``arqA`` para armazenar o endereço que está em ``optarg``, em cada iteração. 
+
+Agora, compile e execute o programa `exemploComplexGetopt.c` que está no repositório. Faça alguns testes para verificar as possibilidades e resultados. 
+
+
+## Considerações finais
+Este tutorial apresentou apenas as estratégias mais simples para o tratamento de argumentos pela linha de comando. Há muito mais o que pode ser feito para fazer esse tratamento como um profissional. 
+
+Portanto, para se aprofundar sobre o tema, eu sugiro o tutorial [Mead's Guide to getopt](https://azrael.digipen.edu/~mmead/www/mg/getopt/index.html). Esse tutorial vai mais fundo no tratamento dos argumentos, inclusive com as chamadas "opções longas", isto é, aquelas com nomes inteiros (por exemplo ``--verbose``), ao invés de somente letras.
+
+Por fim, se você gostou deste tutorial, ou se tem sugestões de como aprimorá-lo, entre em contato comigo no e-mail [gradvohl@unicamp.br](mailto:gradvohl@unicamp.br). Considere também marcar o repositório com uma estrela :star:.
